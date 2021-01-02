@@ -1,7 +1,7 @@
-interface GreetingSettings {
-  greeting: string;
-  duration?: number;
-  color?: string;
+interface readContentFileObj {
+  fs: any;
+  slug?: string;
+  filename?: string;
 }
 
-declare function greet(setting: GreetingSettings): void;
+// declare function greet(setting: GreetingSettings): void;

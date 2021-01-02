@@ -15,7 +15,7 @@ const listContentFiles = ({ fs }) => {
 /**
  * Markdown のファイルの中身をパースして取得する
  */
-const readContentFile = async ({ fs, slug, filename }) => {
+const readContentFile = async ({ fs, slug, filename }: readContentFileObj) => {
   if (slug === undefined) {
     slug = path.parse(filename).name;
   }
