@@ -10,7 +10,7 @@ export default function Home(props) {
       <hr />
       <ul>
         {posts.map((post) => (
-          <li key={post.slug}>
+          <li key={post.slug} className="font-size-3xl pb-1 text-lg">
             <Link href="/posts/[id]" as={`/posts/${post.slug}`}>
               <a>
                 <time>{post.date}</time>
