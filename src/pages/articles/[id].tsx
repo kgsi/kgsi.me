@@ -138,6 +138,7 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ id: string
 
   const convertBlocks: ListBlockChildrenResponse = {
     ...blocks,
+    // @ts-ignore: Unreachable code error
     results: (() => {
       return blocks.results.map((block) => {
         if (block.type === 'image') {
