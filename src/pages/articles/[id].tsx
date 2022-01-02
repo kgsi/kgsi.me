@@ -176,7 +176,8 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
   if (!page || !blocks) {
     return <div />
   }
-  console.log()
+  // @ts-ignore: Unreachable code error
+  const title = page.properties.page.title[0].plain_text
   return (
     <div>
       <Head>
@@ -192,7 +193,7 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
           </div>
         </header>
         <article>
-          <h1 className="font-bold text-xl">{page.properties.page.title[0].plain_text}</h1>
+          <h1 className="font-bold text-xl">{title}</h1>
           <section className="mt-10">
             {blocks.results.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
