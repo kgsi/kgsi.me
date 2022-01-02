@@ -23,7 +23,7 @@ const renderBlock = (block: ResultProps) => {
   switch (type) {
     case 'paragraph':
       return (
-        <p>
+        <p className="mt-4">
           <Text text={block.paragraph.text} />
         </p>
       )
@@ -181,7 +181,7 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
   return (
     <div>
       <Head>
-        {/* <title>{page.properties.Name.title[0].plain_text}</title> */}
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="w-[40rem] mx-auto">
