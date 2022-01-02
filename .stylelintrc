@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "value-list-comma-space-after": null,
+    "custom-property-no-missing-var-function": null
+  }
+}
