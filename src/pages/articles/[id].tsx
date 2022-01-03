@@ -3,12 +3,11 @@ import { ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoi
 import { Fragment } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-
+import Link from 'next/link'
 import { getDatabase, getPage, getBlocks } from '../../utils/notion'
 import { Text } from '../../components/Text'
 import { Footer } from '../../components/Footer'
 import { saveImageIfNeeded } from '../../utils/saveImage'
-import Link from 'next/link'
 
 const databaseId = process.env.NOTION_DATABASE_ID || ''
 

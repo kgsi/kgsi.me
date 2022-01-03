@@ -1,5 +1,3 @@
-// import styles from './post.module.css'
-
 type Props = {
   text: any
 }
