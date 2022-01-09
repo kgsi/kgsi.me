@@ -4,19 +4,11 @@ import Link from 'next/link'
 import { getDatabase } from '../utils/notion'
 import { Text } from '../components/Text'
 import { Footer } from '../components/Footer'
+import { Tag } from '../components/Tag'
 
 export const databaseId = process.env.NOTION_DATABASE_ID || ''
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
-type Tag = {
-  id: string
-  multi_select: Array<{
-    color: string
-    id: string
-    name: string
-  }>
-  type: string
-}
 
 export const getStaticProps = async () => {
   const database = await getDatabase(databaseId)
@@ -33,14 +25,14 @@ const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
       <Head>
-        <title>kgsi blog</title>
+        <title>kgsi.me</title>
         <meta name="description" content="プロダクトデザイナーkgsiのブログです。" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="w-[40rem] mx-auto">
+      <main className="max-w-[60ch] mx-auto">
         <header className="my-10">
-          <h1 className="text-3xl font-bold underline">kgsi blog</h1>
+          <h1 className="text-4xl font-bold text-brand">kgsi.me</h1>
           <p>
             プロダクトデザイナー
             <Link href="https://twitter.com/kgsi">
@@ -56,14 +48,14 @@ const Home: NextPage<Props> = ({ posts }) => {
               month: '2-digit',
               day: '2-digit',
             })
-            const tag = post.properties.tags as any as Tag
+            const tag = post.properties.tags as any as Notion.Tag
 
             return (
               <li key={post.id} className="mt-10">
                 <h2 className="font-bold text-xl">
                   {post.properties.page.type === 'title' && (
                     <Link href={`/articles/${post.id}`} passHref>
-                      <a className="no-underline hover:underline">
+                      <a className="no-underline hover:underline hover:text-brand">
                         <Text text={post.properties.page.title} />
                       </a>
                     </Link>
@@ -73,14 +65,7 @@ const Home: NextPage<Props> = ({ posts }) => {
                   <time>{date}</time>
                   {tag &&
                     tag.multi_select.map((tag, index) => {
-                      return (
-                        <span
-                          className="ml-2 px-4 py-1 text-xs border border-grey-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
-                          key={index}
-                        >
-                          {tag.name}
-                        </span>
-                      )
+                      return <Tag key={index} name={tag.name} />
                     })}
                 </div>
               </li>

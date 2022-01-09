@@ -5,9 +5,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getDatabase, getPage, getBlocks } from '../../utils/notion'
+import { saveImageIfNeeded } from '../../utils/saveImage'
 import { Text } from '../../components/Text'
 import { Footer } from '../../components/Footer'
-import { saveImageIfNeeded } from '../../utils/saveImage'
+import { Tag } from '../../components/Tag'
 
 const databaseId = process.env.NOTION_DATABASE_ID || ''
 
@@ -45,6 +46,7 @@ const renderBlock = (block: ResultProps) => {
         </h3>
       )
     case 'bulleted_list_item':
+      // console.log(block)
       return (
         <li>
           <Text text={block.bulleted_list_item.text} />
@@ -125,16 +127,6 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ id: string
       }),
   )
 
-  const blocksWithChildren = blocks.results.map((block) => {
-    // Add child blocks if the block should contain children but none exists
-
-    // if (block.has_children && !block[block.type].children) {
-    //   block[block.type]['children'] = childBlocks.find((x) => x.id === block.id)?.children
-    // }
-
-    return block
-  })
-
   const convertBlocks: ListBlockChildrenResponse = {
     ...blocks,
     // @ts-ignore: Unreachable code error
@@ -154,13 +146,22 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ id: string
               },
             },
           }
+        } else if (block.has_children) {
+          // @ts-ignore: Unreachable code error
+          console.log(block.bulleted_list_item.children)
+          // @ts-ignore: Unreachable code error
+          // editBlock[block.type]['children'] = childBlocks.find((x) => x.id === block.id)?.children
+          // @ts-ignore: Unreachable code error
+          // console.log(childBlocks.find((x) => x.id === block.id)?.children)
+
+          return block
         } else {
           return block
         }
       })
     })(),
   }
-  console.log(convertBlocks)
+  // console.log(convertBlocks)
 
   return {
     props: {
@@ -177,32 +178,51 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
   }
   // @ts-ignore: Unreachable code error
   const title = page.properties.page.title[0].plain_text
+  // @ts-ignore: Unreachable code error
+  const date = new Date(page.properties.date.date.start).toLocaleString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  const tag = page.properties.tags as any as Notion.Tag
+
   return (
     <div>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-[40rem] mx-auto">
+      <main className="max-w-[60ch] mx-auto p-4">
         <header className="my-10">
           <div>
             <Link href="/">
-              <a>kgsi.me</a>
+              <a className="font-bold text-brand">kgsi.me</a>
             </Link>
           </div>
         </header>
         <article>
-          <h1 className="font-bold text-xl">{title}</h1>
-          <section className="mt-10">
+          <header>
+            <h1 className="font-bold text-2xl">{title}</h1>
+            <div className="mt-2">
+              <time className="text-gray-400">{date}</time>
+              {tag &&
+                tag.multi_select.map((tag, index) => {
+                  return <Tag key={index} name={tag.name} />
+                })}
+            </div>
+          </header>
+          <section className="mt-8">
             {blocks.results.map((block) => (
               <Fragment key={block.id}>{renderBlock(block)}</Fragment>
             ))}
+          </section>
+          <footer className="border-solid border-t border-gray-200 mt-8">
             <div className="mt-6">
               <Link href="/">
                 <a>← 記事一覧へ戻る</a>
               </Link>
             </div>
-          </section>
+          </footer>
         </article>
         <Footer />
       </main>
