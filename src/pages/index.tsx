@@ -5,6 +5,7 @@ import { getDatabase } from '../utils/notion'
 import { Text } from '../components/Text'
 import { Footer } from '../components/Footer'
 import { Tag } from '../components/Tag'
+import { Main } from '../layouts/Main'
 
 export const databaseId = process.env.NOTION_DATABASE_ID || ''
 
@@ -29,11 +30,10 @@ const Home: NextPage<Props> = ({ posts }) => {
         <meta name="description" content="プロダクトデザイナーkgsiのブログです。" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className="max-w-[60ch] mx-auto">
+      <Main>
         <header className="my-10">
-          <h1 className="text-4xl font-bold text-brand">kgsi.me</h1>
-          <p>
+          <h1 className="text-3xl font-bold">kgsi.me</h1>
+          <p className="mt-2">
             プロダクトデザイナー
             <Link href="https://twitter.com/kgsi">
               <a>@kgsi</a>
@@ -62,7 +62,7 @@ const Home: NextPage<Props> = ({ posts }) => {
                   )}
                 </h2>
                 <div className="mt-2">
-                  <time>{date}</time>
+                  <time className="text-gray-600">{date}</time>
                   {tag &&
                     tag.multi_select.map((tag, index) => {
                       return <Tag key={index} name={tag.name} />
@@ -73,7 +73,7 @@ const Home: NextPage<Props> = ({ posts }) => {
           })}
         </ul>
         <Footer />
-      </main>
+      </Main>
     </div>
   )
 }

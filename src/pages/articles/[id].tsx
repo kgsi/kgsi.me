@@ -9,6 +9,7 @@ import { saveImageIfNeeded } from '../../utils/saveImage'
 import { Text } from '../../components/Text'
 import { Footer } from '../../components/Footer'
 import { Tag } from '../../components/Tag'
+import { Main } from '../../layouts/Main'
 
 const databaseId = process.env.NOTION_DATABASE_ID || ''
 
@@ -189,10 +190,10 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
   return (
     <div>
       <Head>
-        <title>{title}</title>
+        <title>{title} / kgsi.me</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="max-w-[60ch] mx-auto p-4">
+      <Main>
         <header className="my-10">
           <div>
             <Link href="/">
@@ -204,7 +205,7 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
           <header>
             <h1 className="font-bold text-2xl">{title}</h1>
             <div className="mt-2">
-              <time className="text-gray-400">{date}</time>
+              <time className="text-gray-600">{date}</time>
               {tag &&
                 tag.multi_select.map((tag, index) => {
                   return <Tag key={index} name={tag.name} />
@@ -225,7 +226,7 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
           </footer>
         </article>
         <Footer />
-      </main>
+      </Main>
     </div>
   )
 }

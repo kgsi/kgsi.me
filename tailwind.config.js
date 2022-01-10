@@ -1,8 +1,10 @@
 module.exports = {
-  content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}', './src/layouts/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    colors: {
-      brand: '#294CCB',
+    extend: {
+      colors: {
+        brand: '#294CCB',
+      },
     },
   },
   plugins: [],
