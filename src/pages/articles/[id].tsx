@@ -220,7 +220,7 @@ const Post: NextPage<Props> = ({ page, blocks }) => {
           <footer className="border-solid border-t border-gray-200 mt-8">
             <div className="mt-6">
               <Link href="/">
-                <a>← 記事一覧へ戻る</a>
+                <a className="hover:underline">← 記事一覧へ戻る</a>
               </Link>
             </div>
           </footer>
